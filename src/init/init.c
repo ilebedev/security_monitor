@@ -22,9 +22,9 @@ void sm_init(void) {
 
   // Initialize region metadata : untrusted SW owns all regions that do not include SM code.
   for ( int i=0; i<NUM_REGIONS; i++ ) {
-    bool region_includes_sm = (uint64_t)region_id_to_addr(i) > (SM_ADDR+SM_LEN);
-    sm->regions[i].owner = region_includes_sm ? OWNER_UNTRUSTED : OWNER_SM;
-    sm->regions[i].type = REGION_TYPE_UNTRUSTED;
+    bool region_includes_sm = (uint64_t)region_id_to_addr(i) <= (SM_ADDR+SM_LEN);
+    sm->regions[i].owner = region_includes_sm ? OWNER_SM : OWNER_UNTRUSTED;
+    sm->regions[i].type = region_includes_sm ? REGION_TYPE_SM : REGION_TYPE_UNTRUSTED;
     sm->regions[i].state = REGION_STATE_OWNED;
     unlock_region(i); // Ensure cores aren't locked. the SM must be initialized in a vaccum, with only one thread running, so this is not dangerous.
   }
