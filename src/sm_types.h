@@ -12,11 +12,40 @@
 // SM Types
 // --------
 
+// KEYS
 typedef boot_image_header_t sm_keys_t;
+
+// DRAM REGIONS
 
 typedef struct region_map_t {
   bool flags[NUM_REGIONS];
 } region_map_t;
+
+typedef enum {
+   REGION_STATE_INVALID = 0,
+   REGION_STATE_FREE = 1,
+   REGION_STATE_BLOCKED = 2,
+   REGION_STATE_LOCKED = 3,
+   REGION_STATE_OWNED = 4,
+} region_state_t;
+
+typedef enum {
+   REGION_TYPE_UNTRUSTED = 0,
+   REGION_TYPE_ENCLAVE = 1,
+   REGION_TYPE_METADATA = 2,
+   REGION_TYPE_SM = 3,
+} region_type_t;
+
+typedef struct sm_region_t {
+  enclave_id_t owner;
+
+  region_type_t type;
+  region_state_t state;
+
+  platform_lock_t lock;
+} sm_region_t;
+
+// MAILBOXES
 
 typedef enum {
   ENCLAVE_MAILBOX_STATE_UNUSED = 0,
@@ -30,6 +59,8 @@ typedef struct mailbox_t {
   hash_t sender_measurement;
   uint8_t message[MAILBOX_SIZE];
 } mailbox_t;
+
+// ENCLAVE
 
 typedef enum {
   ENCLAVE_STATE_CREATED = 0,
@@ -60,6 +91,8 @@ typedef struct enclave_metadata_t {
   mailbox_t mailboxes[];
 } enclave_metadata_t;
 
+// THREAD
+
 typedef struct thread_metadata_t {
   // Parameters
   uintptr_t entry_pc;
@@ -81,6 +114,8 @@ typedef struct thread_metadata_t {
   platform_core_state_t aex_state;
 } thread_metadata_t;
 
+// METADATA
+
 typedef enum { // NOTE must fit into 12 bits
   METADATA_PAGE_INVALID = 0,
   METADATA_PAGE_FREE = 1,
@@ -99,6 +134,8 @@ typedef union metadata_region_t {
 
 #define get_metadata_start_page() ( 1 + ( (sizeof(page_map_t)+PAGE_SIZE-1) / PAGE_SIZE ) )
 
+// CORE 
+
 typedef struct sm_core_t {
   enclave_id_t owner;
   thread_id_t thread;
@@ -106,14 +143,8 @@ typedef struct sm_core_t {
   platform_lock_t lock;
 } sm_core_t;
 
-typedef struct sm_region_t {
-  enclave_id_t owner;
 
-  region_type_t type;
-  region_state_t state;
-
-  platform_lock_t lock;
-} sm_region_t;
+// SM
 
 typedef struct sm_state_t {
   sm_keys_t keys;
