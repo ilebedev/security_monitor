@@ -40,6 +40,7 @@ $(IDPT_BIN): $(SM_DIR)/scripts/idpt.py
 
 ALL_TESTS_SRC := \
 	$(COMMON_DIR)/htif/htif.c \
+	$(COMMON_DIR)/htif/htif_util.c \
 	$(SM_TEST_DIR)/test_entry.S \
 	$(SM_TEST_DIR)/null_boot_loader/sm_keys.c \
 	$(SM_TEST_DIR)/null_boot_loader/sm.S \
