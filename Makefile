@@ -8,8 +8,8 @@ TOOLS_DIR:=$(TOP_DIR)/../build/
 CC=${TOOLS_DIR}/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc
 OBJCOPY=${TOOLS_DIR}/riscv-gnu-toolchain/bin/riscv64-unknown-elf-objcopy
 
-CC=riscv64-unknown-elf-gcc
-OBJCOPY=riscv64-unknown-elf-objcopy
+CC=riscv64-unknown-linux-gnu-gcc
+OBJCOPY=riscv64-unknown-linux-gnu-objcopy
 
 QEMU=${TOOLS_DIR}/qemu/riscv64-softmmu/qemu-system-riscv64
 QEMU_FLAGS= -machine sanctum -m 2G -nographic

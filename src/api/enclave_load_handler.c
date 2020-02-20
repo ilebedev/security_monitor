@@ -76,7 +76,7 @@ api_result_t sm_internal_enclave_load_handler (enclave_id_t enclave_id, uintptr_
   memcpy((void *) phys_addr, (void *) &enclave_handler_start, size_handler);
 
   // Update the measurement
-  hash_extend(&enclave_metadata->hash_context, &enclave_handler_start, size_handler);
+  //hash_extend(&enclave_metadata->hash_context, &enclave_handler_start, size_handler);
 
   // Update the enclave state
   enclave_metadata->init_state = ENCLAVE_STATE_HANDLER_LOADED;

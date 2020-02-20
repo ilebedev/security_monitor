@@ -120,9 +120,9 @@ api_result_t sm_internal_enclave_load_page (enclave_id_t enclave_id,
   memcpy((void *) phys_addr, (void *) os_addr, PAGE_SIZE);
 
   // Update measurement
-  hash_extend(&enclave_metadata->hash_context, &virtual_addr, sizeof(virtual_addr));
-  hash_extend(&enclave_metadata->hash_context, &acl, sizeof(acl));
-  hash_extend(&enclave_metadata->hash_context, (const void *) os_addr, PAGE_SIZE);
+  //hash_extend(&enclave_metadata->hash_context, &virtual_addr, sizeof(virtual_addr));
+  //hash_extend(&enclave_metadata->hash_context, &acl, sizeof(acl));
+  //hash_extend(&enclave_metadata->hash_context, (const void *) os_addr, PAGE_SIZE);
 
   // Release locks
   unlock_regions(&locked_regions);

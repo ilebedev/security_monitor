@@ -12,12 +12,31 @@ static int test_encrypt_ecb(void);
 static int test_decrypt_ecb(void);
 static void test_encrypt_ecb_verbose(void);
 
+static volatile int a[16] = {12};
+
+static volatile int b[16] = {12};
+
+static volatile int c[16] = {12};
+
+static volatile int secret = 3; // 1
 
 void enclave_entry() {
-  int exit = test_encrypt_cbc() + test_decrypt_cbc() +
-          test_encrypt_ctr() + test_decrypt_ctr() +
-	      test_decrypt_ecb() + test_encrypt_ecb();
+  for (int i = 0; i<16; i++)
+        a[i] = 42;
 
+  if (secret == 4) {
+//    for (int i = 0; i<16; i++)
+        b[0] = 42;
+  } 
+  else {
+//    for (int i = 0; i<16; i++)
+        c[0] = 42;
+  }
+
+//  int exit = test_encrypt_cbc() + test_decrypt_cbc() +
+//          test_encrypt_ctr() + test_decrypt_ctr() +
+//	      test_decrypt_ecb() + test_encrypt_ecb();
+//
 
   sm_exit_enclave();
 }
