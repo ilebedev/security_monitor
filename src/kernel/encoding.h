@@ -1,6 +1,7 @@
 #ifndef RISCV_CSR_ENCODING_H
 #define RISCV_CSR_ENCODING_H
 
+#define MSTATUS_MIE         0x00000008
 #define MSTATUS_MPP         0x00001800
 #define MSTATUS_MPRV        0x00020000
 #define MSTATUS_MXR         0x00080000

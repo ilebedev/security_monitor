@@ -1,5 +1,5 @@
 #include <sm.h>
-
+#include <kernel/encoding.h>
 api_result_t sm_internal_enclave_exit() { // TODO: noreturn
 
   // Caller is authenticated and authorized by the trap routing logic : the trap handler and MCAUSE unambiguously identify the caller, and the trap handler does not route unauthorized API calls.
@@ -109,6 +109,13 @@ api_result_t sm_internal_enclave_exit() { // TODO: noreturn
   for(int i = 0; i < NUM_REGISTERS; i++) {
     regs[i] = thread_metadata->untrusted_state[i];
   }
+
+  set_csr(mie, MIP_MTIP);
+  set_csr(mie, MIP_MSIP);
+  set_csr(mie, MIP_SSIP);
+  set_csr(mie, MIP_STIP);
+  set_csr(mie, MIP_SEIP);
+
 
   // Release locks
   unlock_regions(&locked_regions);

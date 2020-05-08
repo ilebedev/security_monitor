@@ -1,4 +1,5 @@
 #include <sm.h>
+#include <kernel/encoding.h>
 
 extern uintptr_t trap_vector_from_untrusted;
 extern uintptr_t stack_ptr;
@@ -130,10 +131,14 @@ api_result_t sm_internal_enclave_enter (enclave_id_t enclave_id, thread_id_t thr
   // Prepare enclave sp
   swap_csr(mscratch, thread_metadata->fault_sp);
 
+  // Deactivate all interrupt for now
+  write_csr(mie, 0);
+
   // Release locks
   unlock_regions(&locked_regions);
   unlock_core(core_id);
   // </TRANSACTION>
+
 
   register uint64_t t0 asm ("t0") = thread_metadata->entry_sp;
   asm volatile (" \
