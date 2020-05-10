@@ -21,10 +21,16 @@ static volatile int c[16] = {12};
 static volatile int secret = 3; // 1
 
 void enclave_entry() {
+  void* shared_begin = 0xF000000;
+  int result = strcmp(shared_begin,"A small test");
+  if (result == 0) {
+    strcpy(shared_begin,"Observed and changed by the enclave");
+  } else {
+    strcpy(shared_begin,"Not observed by enclave but changed anyway");
+  }
   int exit = test_encrypt_cbc() + test_decrypt_cbc() +
-          test_encrypt_ctr() + test_decrypt_ctr() +
-	      test_decrypt_ecb() + test_encrypt_ecb();
-
+    test_encrypt_ctr() + test_decrypt_ctr() +
+    test_decrypt_ecb() + test_encrypt_ecb();
 
   sm_exit_enclave();
 }

@@ -16,6 +16,7 @@ ENCLAVE_INCLUDES := \
 ENCLAVE_COMMON_SRC := \
 	$(ENCLAVE_SRC_DIR)/enclave_entry.S \
     $(COMMON_DIR)/clib/memcpy.c \
+    $(COMMON_DIR)/clib/strcmp.c \
 	$(COMMON_DIR)/clib/memcmp.c \
     $(ENCLAVE_SRC_DIR)/tiny-AES-c/aes.c \
   $(ENCLAVE_SRC_DIR)/enclave_code.c \
